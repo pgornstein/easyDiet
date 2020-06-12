@@ -31,7 +31,7 @@ def schema():
     # Create the recipes table
     sql = """CREATE TABLE IF NOT EXISTS recipes (
              pk INT AUTO_INCREMENT PRIMARY KEY,
-             id INT UNIQUE KEY,
+             rid INT UNIQUE KEY,
              ingredients TEXT NOT NULL,
              recipe TEXT NOT NULL,
              nutrition_info TEXT NOT NULL,
@@ -45,10 +45,11 @@ def schema():
              pk INT AUTO_INCREMENT PRIMARY KEY,
              plan_pk INT NOT NULL,
              meal VARCHAR(9) NOT NULL,
+             date_served DATE NOT NULL,
              time_served TIME NOT NULL,
              recipe_id INT NOT NULL,
              FOREIGN KEY (plan_pk) REFERENCES plans (pk),
-             FOREIGN KEY (recipe_id) REFERENCES recipes (id));"""
+             FOREIGN KEY (recipe_id) REFERENCES recipes (rid));"""
     cursor.execute(sql)
 
 if __name__ == "__main__":
