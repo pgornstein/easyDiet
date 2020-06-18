@@ -12,6 +12,7 @@ const Router = () => {
       <Route path="/register" component={Register} />
       <Route path="/setup" component={Setup} />
       <Route path="/calendar" component={Calendar} />
+      <Redirect from="/" to="/login" />
     </div>
   )
 }
