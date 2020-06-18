@@ -1,12 +1,11 @@
 import mysql.connector
-from .meal import Meal
+from meal import Meal
 
 class Plan:
 
     def __init__(self, **kwargs):
         self.pk = kwargs.get("pk")
         self.user_pk = kwargs.get("user_pk")
-        self.continuous = kwargs.get("continuous")
         self.start_date = kwargs.get("start_date")
         self.end_date = kwargs.get("end_date")
         self.type = kwargs.get("type")
@@ -22,8 +21,8 @@ class Plan:
         sql = """INSERT INTO plans (
                  user_pk, continuous, start_date, end_date, type, breakfast_time, 
                  lunchtime, dinnertime, calorie_limit
-                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-        values = (self.user_pk, self.continuous, self.start_date, self.end_date,
+                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+        values = (self.user_pk, self.start_date, self.end_date,
                   self.type, self.breakfast_time, self.lunchtime, self.dinnertime,
                   self.calorie_limit)
         cursor.execute(sql, values)
@@ -46,10 +45,10 @@ class Plan:
         cursor.execute(sql, (user_pk,))
         result = cursor.fetchone()
         if result:
-            return cls(pk=result[0], user_pk=result[1], continuous=result[2],
-                       start_date=result[3], end_date=result[4], type=result[5],
-                       breakfast_time=result[6], lunchtime=result[7],
-                       dinnertime=result[8], calorie_limit=result[9])
+            return cls(pk=result[0], user_pk=result[1], start_date=result[2], 
+                       end_date=result[3], type=result[4], breakfast_time=result[5], 
+                       lunchtime=result[6], dinnertime=result[7], 
+                       calorie_limit=result[8])
         return None
 
     def get_all_meals(self):

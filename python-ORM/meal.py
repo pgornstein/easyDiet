@@ -1,5 +1,5 @@
 import mysql.connector
-from .recipe import Recipe
+from recipe import Recipe
 
 class Meal:
 
