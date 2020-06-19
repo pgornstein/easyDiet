@@ -19,6 +19,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import NumericInput from 'react-numeric-input';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,15 +76,17 @@ export default function Setup() {
 
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(addMonth(new Date()))
-  const [type, setType] = useState("")
+  const [type, setType] = useState("regular")
   const [breakfastTime, setBreakfastTime] = useState(breakfast)
   const [lunchtime, setLunchtime] = useState(lunch)
   const [dinnertime, setDinnertime] = useState(dinner)
-  const [calorieLimit, setCalorieLimit] = useState(0)
+  const [calorieLimit, setCalorieLimit] = useState(2000)
 
   const [requestSuccess, setRequestSuccess] = useState(true)
 
   const createDiet = async () => {
+    const formattedStartDate = startDate.toISOString();
+    const formattedEndDate = endDate.toISOString();
     const data = {
       token: token,
       startDate: startDate,
@@ -132,20 +135,22 @@ export default function Setup() {
               <Grid item xs={12} sm={6}>
               <DatePicker value={endDate} label="End Date" onChange={setEndDate} /> 
               </Grid>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="diet_type_label">Diet</InputLabel>
-                <Select
-                  labelId="diet_type_label"
-                  id="diet-type"
-                  value={type}
-                  onChange={setType}
-                >
-                  <MenuItem value="regular">Regular</MenuItem>
-                  <MenuItem value="vegetarian">Vegetarian</MenuItem>
-                  <MenuItem value="vegan">Vegan</MenuItem>
-                  <MenuItem value="paleo">Pegan</MenuItem>
-                </Select>
-            </FormControl>
+              <Grid item xs={12} sm={6}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="diet_type_label">Diet</InputLabel>
+                  <Select
+                    labelId="diet_type_label"
+                    id="diet-type"
+                    value={type}
+                    onChange={e => setType(e.target.value)}
+                  >
+                    <MenuItem value="regular">Regular</MenuItem>
+                    <MenuItem value="vegetarian">Vegetarian</MenuItem>
+                    <MenuItem value="vegan">Vegan</MenuItem>
+                    <MenuItem value="paleo">Paleo</MenuItem>
+                  </Select>
+              </FormControl>
+            </Grid>
               <Grid item xs={12} sm={6}>
                 <TimePicker value={breakfastTime} label="Breakfast time" onChange={setBreakfastTime} /> 
               </Grid>
@@ -154,6 +159,11 @@ export default function Setup() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TimePicker value={dinnertime} label="Dinnertime" onChange={setDinnertime} /> 
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <label>Calorie limit</label>
+                <NumericInput min={0} max={10000} value={2000} step={20} 
+                              onChange={e => setCalorieLimit(e)} />
               </Grid>
             </Grid>
             <Button
@@ -164,7 +174,7 @@ export default function Setup() {
               className={classes.submit}
               onClick={e => {
                 e.preventDefault()
-                console.log(type)
+                console.log(calorieLimit)
               }}
             >
               Sign Up
