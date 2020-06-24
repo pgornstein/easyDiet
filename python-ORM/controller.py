@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from user import User
+from plan import Plan
 from util import create_session, lookup_pk_by_session
+from generate import generate_initial_meals
 
 app = Flask(__name__)
 CORS(app)
@@ -38,9 +40,14 @@ def create_diet():
     success = True
     user_info = request.get_json()
     if user_info:
-        pk = lookup_pk_by_session(user_info[token])
-        current_user = User.user_for_pk(pk)
-        #continue here
+        user_pk = lookup_pk_by_session(user_info["token"])
+        user_info["user_pk"] = user_pk
+        new_plan = Plan(**user_info)
+        new_plan.save()
+        generate_initial_meals(user_pk)
+    else:   
+        success = False
+    return jsonify({"success": success})
 
 if __name__ == "__main__":
     app.run(debug=True)

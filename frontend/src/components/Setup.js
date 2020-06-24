@@ -20,6 +20,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NumericInput from 'react-numeric-input';
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,6 +62,7 @@ const setTimes = () => {
   let a = new Date();
   let b = new Date();
   let c = new Date();
+  //Times adjusted so that GMT looks like our local time
   a.setHours(7, 0, 0);
   b.setHours(12, 0, 0);
   c.setHours(19, 0, 0);
@@ -84,18 +86,24 @@ export default function Setup() {
 
   const [requestSuccess, setRequestSuccess] = useState(true)
 
+  //Override to return local time instead of UTC
+  Date.prototype.toJSON = function(){ return moment(this).format(); }
+
   const createDiet = async () => {
-    const formattedStartDate = startDate.toISOString();
-    const formattedEndDate = endDate.toISOString();
+    const formattedStartDate = startDate.toJSON().slice(0, 10);
+    const formattedEndDate = endDate.toJSON().slice(0, 10);
+    const formattedBreakfastTime = breakfastTime.toJSON().slice(11, 19);
+    const formattedLunchtime = lunchtime.toJSON().slice(11, 19);
+    const formattedDinnertime = dinnertime.toJSON().slice(11, 19);
     const data = {
       token: token,
-      startDate: startDate,
-      endDate: endDate,
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
       type: type,
-      breakfastTime: breakfastTime,
-      lunchtime: lunchtime,
-      dinnertime: dinnertime,
-      calorieLimit: calorieLimit
+      breakfast_time: formattedBreakfastTime,
+      lunchtime: formattedLunchtime,
+      dinnertime: formattedDinnertime,
+      calorie_limit: calorieLimit
     }
     console.log(data)
     const configs = {
@@ -162,7 +170,7 @@ export default function Setup() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <label>Calorie limit</label>
-                <NumericInput min={0} max={10000} value={2000} step={20} 
+                <NumericInput min={0} max={10000} value={calorieLimit} step={20}
                               onChange={e => setCalorieLimit(e)} />
               </Grid>
             </Grid>
@@ -173,8 +181,8 @@ export default function Setup() {
               color="primary"
               className={classes.submit}
               onClick={e => {
-                e.preventDefault()
-                console.log(calorieLimit)
+                e.preventDefault();
+                createDiet();
               }}
             >
               Sign Up

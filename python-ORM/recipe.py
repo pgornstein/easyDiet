@@ -8,7 +8,6 @@ class Recipe:
         self.ingredients = kwargs.get("ingredients")
         self.recipe = kwargs.get("recipe")
         self.nutrition_info = kwargs.get("nutrition_info")
-        self.image = kwargs.get("image")
         self.prep_time = kwargs.get("prep_time")
 
     def save(self):
@@ -16,10 +15,10 @@ class Recipe:
                                        host='127.0.0.1', database='diet')
         cursor = mydb.cursor()
         sql = """INSERT INTO recipes (
-                 rid, ingredients, recipe, nutrition_info, image, prep_time
-                 ) VALUES (%s, %s, %s, %s, %s, %s)"""
+                 rid, ingredients, recipe, nutrition_info, prep_time
+                 ) VALUES (%s, %s, %s, %s, %s)"""
         values = (self.rid, self.ingredients, self.recipe, self.nutrition_info, 
-                  self.image, self.prep_time)
+                  self.prep_time)
         cursor.execute(sql, values)
         mydb.commit()
 
@@ -32,7 +31,7 @@ class Recipe:
         mydb.commit()
 
     @classmethod
-    def recipe_for_meal(cls, rid):
+    def recipe_by_rid(cls, rid):
         mydb = mysql.connector.connect(user='easyDiet', password='diet/SMART2020',
                                        host='127.0.0.1', database='diet')
         cursor = mydb.cursor()
@@ -41,6 +40,5 @@ class Recipe:
         result = cursor.fetchone()
         if result:
             return cls(pk=result[0], rid=result[1], ingredients=result[2],
-                       recipe=result[3], nutrition_info=result[4], image=result[5],
-                       prep_time=result[6])
+                       recipe=result[3], nutrition_info=result[4], prep_time=result[5])
         return None

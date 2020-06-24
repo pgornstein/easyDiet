@@ -1,11 +1,12 @@
 import mysql.connector
-from .recipe import Recipe
+from recipe import Recipe
 
 class Meal:
 
     def __init__(self, **kwargs):
         self.pk = kwargs.get("pk")
         self.plan_pk = kwargs.get("plan_pk")
+        self.name = kwargs.get("name")
         self.meal = kwargs.get("meal")
         self.date_served = kwargs.get("date_served")
         self.time_served = kwargs.get("time_served")
@@ -16,9 +17,9 @@ class Meal:
                                        host='127.0.0.1', database='diet')
         cursor = mydb.cursor()
         sql = """INSERT INTO meals (
-                 plan_pk, meal, date_served, time_served, recipe_id
-                 ) VALUES (%s, %s, %s, %s, %s)"""
-        values = (self.plan_pk, self.meal, self.date_served, self.time_served, 
+                 plan_pk, name, meal, date_served, time_served, recipe_id
+                 ) VALUES (%s, %s, %s, %s, %s, %s)"""
+        values = (self.plan_pk, self.name, self.meal, self.date_served, self.time_served, 
                   self.recipe_id)
         cursor.execute(sql, values)
         mydb.commit()
@@ -42,9 +43,9 @@ class Meal:
         if generated_result:
             result = []
             for meal in generated_result:
-                newMeal = cls(pk=result[0], plan_pk=result[1], meal=result[2],
-                       date_served=result[3], time_served=result[4], 
-                       recipe_id=result[5])
+                newMeal = cls(pk=result[0], plan_pk=result[1], name=result[2],
+                              meal=result[3], date_served=result[4], 
+                              time_served=result[5], recipe_id=result[6])
                 result.append(newMeal)
             return result
         return None
@@ -63,13 +64,13 @@ class Meal:
         if generated_result:
             result = []
             for meal in generated_result:
-                newMeal = cls(pk=result[0], plan_pk=result[1], meal=result[2],
-                       date_served=result[3], time_served=result[4], 
-                       recipe_id=result[5])
+                newMeal = cls(pk=result[0], plan_pk=result[1], name=result[2],
+                              meal=result[3], date_served=result[4], 
+                              time_served=result[5], recipe_id=result[6])
                 result.append(newMeal)
             return result
         return None
 
     def get_recipe(self):
-        recipe = Recipe.recipe_for_meal(self.recipe_id)
+        recipe = Recipe.recipe_by_rid(self.recipe_id)
         return recipe

@@ -31,11 +31,10 @@ def schema():
     # Create the recipes table
     sql = """CREATE TABLE IF NOT EXISTS recipes (
              pk INT AUTO_INCREMENT PRIMARY KEY,
-             rid INT UNIQUE KEY,
+             rid INT UNIQUE KEY NOT NULL,
              ingredients TEXT NOT NULL,
              recipe TEXT NOT NULL,
              nutrition_info TEXT NOT NULL,
-             image LONGBLOB NOT NULL,
              prep_time INT NOT NULL
              );"""
     cursor.execute(sql)
@@ -44,11 +43,13 @@ def schema():
     sql = """CREATE TABLE IF NOT EXISTS meals (
              pk INT AUTO_INCREMENT PRIMARY KEY,
              plan_pk INT NOT NULL,
+             name VARCHAR(100) NOT NULL,
              meal VARCHAR(9) NOT NULL,
+             date_served DATE NOT NULL,
              time_served TIME NOT NULL,
              recipe_id INT NOT NULL,
              FOREIGN KEY (plan_pk) REFERENCES plans (pk),
-             FOREIGN KEY (recipe_id) REFERENCES recipes (id));"""
+             FOREIGN KEY (recipe_id) REFERENCES recipes (rid) );"""
     cursor.execute(sql)
 
     sql = """CREATE TABLE IF NOT EXISTS sessions (

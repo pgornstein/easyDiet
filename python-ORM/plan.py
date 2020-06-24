@@ -19,11 +19,11 @@ class Plan:
                                        host='127.0.0.1', database='diet')
         cursor = mydb.cursor()
         sql = """INSERT INTO plans (
-                 user_pk, continuous, start_date, end_date, type, breakfast_time, 
-                 lunchtime, dinnertime, calorie_limit
+                 user_pk, start_date, end_date, type, breakfast_time, lunchtime, 
+                 dinnertime, calorie_limit
                  ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
-        values = (self.user_pk, self.start_date, self.end_date,
-                  self.type, self.breakfast_time, self.lunchtime, self.dinnertime,
+        values = (self.user_pk, self.start_date, self.end_date, self.type, 
+                  self.breakfast_time, self.lunchtime, self.dinnertime,
                   self.calorie_limit)
         cursor.execute(sql, values)
         mydb.commit()
