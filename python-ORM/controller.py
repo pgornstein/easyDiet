@@ -35,7 +35,7 @@ def login_user():
     else:
         return jsonify({"connected": False})
 
-@app.route("/create_diet", methods=["POST"])
+@app.route("/create_plan", methods=["POST"])
 def create_diet():
     success = True
     user_info = request.get_json()
@@ -49,5 +49,18 @@ def create_diet():
         success = False
     return jsonify({"success": success})
 
+@app.route("/has_plan", methods=["POST"])
+def has_plan():
+    has = False
+    success = True
+    user_info = request.get_json()
+    if user_info:
+        user_pk = lookup_pk_by_session(user_info["token"])
+        plan = Plan.plan_for_user(user_pk)
+        if plan:
+            has = True
+    else:
+        success = False
+    return jsonify({"success": success, "hasPlan": has})
 if __name__ == "__main__":
     app.run(debug=True)
