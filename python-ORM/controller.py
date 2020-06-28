@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from user import User
 from plan import Plan
+from meal import Meal
+from recipe import Recipe
 from util import create_session, lookup_pk_by_session
 from generate import generate_initial_meals
 
@@ -62,5 +64,31 @@ def has_plan():
     else:
         success = False
     return jsonify({"success": success, "hasPlan": has})
+
+@app.route("/get_todays_meals", methods=["POST"])
+def get_todays_meals():
+    success = True
+    result = {}
+    user_info = request.get_json()
+    if user_info:
+        user_pk = lookup_pk_by_session(user_info["token"])
+        plan = Plan.plan_for_user(user_pk)
+        meals = plan.get_get_meals_for_day(user_info["today"])
+        result["success"] = success
+        for i in range(3):
+            meal_result = {}
+            meal = meals[i]
+            recipe = meal.get_recipe()
+            meal_result["name"] = meal.name
+            meal_result["prepTime"] = recipe.prep_time
+            meal_result["ingredients"] = recipe.ingredients
+            meal_result["recipe"] = recipe.recipe
+            meal_result["nutrition"] = recipe.nutrition
+            result[meal.meal] = meal_result # i.e. result["breakfast"] = meal_result
+    else:
+        success = False
+    result["success"] = success
+    return jsonify(result)
+
 if __name__ == "__main__":
     app.run(debug=True)

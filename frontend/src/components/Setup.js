@@ -151,7 +151,7 @@ export default function Setup() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" style={{textAlign: "left"}}>
-            Sign up
+            Setup Diet
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
@@ -203,7 +203,7 @@ export default function Setup() {
                 createDiet();
               }}
             >
-              Sign Up
+              Continue
             </Button>
           </form>
         </div>
