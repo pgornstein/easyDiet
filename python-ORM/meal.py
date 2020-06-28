@@ -43,9 +43,9 @@ class Meal:
         if generated_result:
             result = []
             for meal in generated_result:
-                newMeal = cls(pk=result[0], plan_pk=result[1], name=result[2],
-                              meal=result[3], date_served=result[4], 
-                              time_served=result[5], recipe_id=result[6])
+                newMeal = cls(pk=meal[0], plan_pk=meal[1], name=meal[2],
+                              meal=meal[3], date_served=meal[4], 
+                              time_served=meal[5], recipe_id=meal[6])
                 result.append(newMeal)
             return result
         return None
@@ -64,9 +64,9 @@ class Meal:
         if generated_result:
             result = []
             for meal in generated_result:
-                newMeal = cls(pk=result[0], plan_pk=result[1], name=result[2],
-                              meal=result[3], date_served=result[4], 
-                              time_served=result[5], recipe_id=result[6])
+                newMeal = cls(pk=meal[0], plan_pk=meal[1], name=meal[2],
+                              meal=meal[3], date_served=meal[4], 
+                              time_served=meal[5], recipe_id=meal[6])
                 result.append(newMeal)
             return result
         return None

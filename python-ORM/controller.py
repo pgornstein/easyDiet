@@ -73,17 +73,18 @@ def get_todays_meals():
     if user_info:
         user_pk = lookup_pk_by_session(user_info["token"])
         plan = Plan.plan_for_user(user_pk)
-        meals = plan.get_get_meals_for_day(user_info["today"])
+        meals = plan.get_meals_for_day(user_info["today"])
         result["success"] = success
         for i in range(3):
             meal_result = {}
             meal = meals[i]
             recipe = meal.get_recipe()
+            meal_result["time"] = meal.time_served
             meal_result["name"] = meal.name
             meal_result["prepTime"] = recipe.prep_time
             meal_result["ingredients"] = recipe.ingredients
             meal_result["recipe"] = recipe.recipe
-            meal_result["nutrition"] = recipe.nutrition
+            meal_result["nutritionInfo"] = recipe.nutrition_info
             result[meal.meal] = meal_result # i.e. result["breakfast"] = meal_result
     else:
         success = False
