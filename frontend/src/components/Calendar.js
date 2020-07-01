@@ -35,6 +35,10 @@ export default function Calendar() {
   const [dinnerRecipe, setDinnerRecipe] = useState("")
   const [dinnerNutrition, setDinnerNutrition] = useState("")
 
+  const [showBreakfast, setShowBreakfast] = useState(false)
+  const [showLunch, setShowLunch] = useState(false)
+  const [showDinner, setShowDinner] = useState(false)
+
   //Override to return local time instead of UTC
   Date.prototype.toJSON = function(){ return moment(this).format(); }
 
@@ -101,7 +105,36 @@ export default function Calendar() {
 
   return(
     <div>
-      <h1>Hello</h1>
+      <h1>Hello, today is {today.toDateString()}</h1>
+      <label for="breakfast">Breakfast </label>
+      <button name="breakfast" onClick={e => setShowBreakfast(!showBreakfast)}>show/hide</button>
+      {showBreakfast && <div fontFamily={"Yellowtail"}>
+        <h2>Breakfast: {breakfastTime}  {breakfastName} </h2>
+        <h3>Prep Time: {breakfastPrepTime} minutes</h3>
+        <h3>Ingredients: {breakfastIngredients}</h3>
+        <h3>Recipe: {breakfastRecipe}</h3>
+        <h3>Nutrition Info: {breakfastNutrition}</h3>
+      </div>}
+      <br/>
+      <label for="lunch">Lunch </label>
+      <button name="lunch" onClick={e => setShowLunch(!showLunch)}>show/hide</button>
+      {showLunch && <div>
+        <h2>Lunch: {lunchtime}  {lunchName} </h2>
+        <h3>Prep Time: {lunchPrepTime} minutes</h3>
+        <h3>Ingredients: {lunchIngredients}</h3>
+        <h3>Recipe: {lunchRecipe}</h3>
+        <h3>Nutrition Info: {lunchNutrition}</h3>
+      </div>}
+      <br/>
+      <label for="dinner">Dinner </label>
+      <button name="dinner" onClick={e => setShowDinner(!showDinner)}>show/hide</button>
+      {showDinner && <div>
+        <h2>Dinner: {dinnertime}  {dinnerName} </h2>
+        <h3>Prep Time: {dinnerPrepTime} minutes</h3>
+        <h3>Ingredients: {dinnerIngredients}</h3>
+        <h3>Recipe: {dinnerRecipe}</h3>
+        <h3>Nutrition Info: {dinnerNutrition}</h3>
+      </div>}
     </div>
   );
 }

@@ -60,11 +60,11 @@ def generate_initial_meals(pk):
                 recipe_data = recipe_response.json()
                 ingredients = ""
                 for ingredient in recipe_data["extendedIngredients"]:
-                    ingredients += ingredient["original"] + '\n'
+                    ingredients += ingredient["original"] + ', '
                 recipe_recipe = recipe_data["instructions"]
                 nutrition_info = ""
-                nutrition_info += "Percent protein: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentProtein"]) + '\n'
-                nutrition_info += "Percent fat: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentFat"]) + '\n'
+                nutrition_info += "Percent protein: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentProtein"]) + ', '
+                nutrition_info += "Percent fat: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentFat"]) + ', '
                 nutrition_info += "Percent carbs: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentCarbs"])
                 prep_time = recipe_data["readyInMinutes"]
                 values = {"rid": rid, "ingredients": ingredients, 

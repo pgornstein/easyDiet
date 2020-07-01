@@ -79,7 +79,7 @@ def get_todays_meals():
             meal_result = {}
             meal = meals[i]
             recipe = meal.get_recipe()
-            meal_result["time"] = meal.time_served
+            meal_result["time"] = str(meal.time_served)
             meal_result["name"] = meal.name
             meal_result["prepTime"] = recipe.prep_time
             meal_result["ingredients"] = recipe.ingredients
