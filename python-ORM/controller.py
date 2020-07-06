@@ -38,7 +38,7 @@ def login_user():
         return jsonify({"connected": False})
 
 @app.route("/create_plan", methods=["POST"])
-def create_diet():
+def create_plan():
     success = True
     user_info = request.get_json()
     if user_info:
@@ -80,6 +80,7 @@ def get_todays_meals():
             meal = meals[i]
             recipe = meal.get_recipe()
             meal_result["time"] = str(meal.time_served)
+            meal_result["time"] = meal_result["time"][:-3]
             meal_result["name"] = meal.name
             meal_result["prepTime"] = recipe.prep_time
             meal_result["ingredients"] = recipe.ingredients

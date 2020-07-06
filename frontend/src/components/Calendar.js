@@ -72,30 +72,30 @@ export default function Calendar() {
           body: JSON.stringify(data2),
           headers: {"Content-Type": "application/json"}
         }
-        const response_package2 = await fetch("http://localhost:5000/get_todays_meals", configs)
-        const response2 = await response_package2.json()
+        const response_package2 = await fetch("http://localhost:5000/get_todays_meals", configs);
+        const response2 = await response_package2.json();
         console.log(response2)
         if (response2.success) {
-          setBreakfastTime(response2.breakfast.time)
-          setBreakfastName(response2.breakfast.name)
-          setBreakfastPrepTime(response2.breakfast.prepTime)
-          setBreakfastIngredients(response2.breakfast.ingredients)
-          setBreakfastRecipe(response2.breakfast.recipe)
-          setBreakfastNutrition(response2.breakfast.nutritionInfo)
+          setBreakfastTime(response2.breakfast.time);
+          setBreakfastName(response2.breakfast.name);
+          setBreakfastPrepTime(response2.breakfast.prepTime);
+          setBreakfastIngredients(response2.breakfast.ingredients);
+          setBreakfastRecipe(response2.breakfast.recipe);
+          setBreakfastNutrition(response2.breakfast.nutritionInfo);
 
-          setLunchtime(response2.lunch.time)
-          setLunchName(response2.lunch.name)
-          setLunchPrepTime(response2.lunch.prepTime)
-          setLunchIngredients(response2.lunch.ingredients)
-          setLunchRecipe(response2.lunch.recipe)
-          setLunchNutrition(response2.lunch.nutritionInfo)
+          setLunchtime(response2.lunch.time);
+          setLunchName(response2.lunch.name);
+          setLunchPrepTime(response2.lunch.prepTime);
+          setLunchIngredients(response2.lunch.ingredients);
+          setLunchRecipe(response2.lunch.recipe);
+          setLunchNutrition(response2.lunch.nutritionInfo);
           
-          setDinnertime(response2.dinner.time)
-          setDinnerName(response2.dinner.name)
-          setDinnerPrepTime(response2.dinner.prepTime)
-          setDinnerIngredients(response2.dinner.ingredients)
-          setDinnerRecipe(response2.dinner.recipe)
-          setDinnerNutrition(response2.dinner.nutritionInfo)
+          setDinnertime(response2.dinner.time);
+          setDinnerName(response2.dinner.name);
+          setDinnerPrepTime(response2.dinner.prepTime);
+          setDinnerIngredients(response2.dinner.ingredients);
+          setDinnerRecipe(response2.dinner.recipe);
+          setDinnerNutrition(response2.dinner.nutritionInfo);
         }
       }
     }
@@ -108,32 +108,32 @@ export default function Calendar() {
       <h1>Hello, today is {today.toDateString()}</h1>
       <label for="breakfast">Breakfast </label>
       <button name="breakfast" onClick={e => setShowBreakfast(!showBreakfast)}>show/hide</button>
-      {showBreakfast && <div fontFamily={"Yellowtail"}>
-        <h2>Breakfast: {breakfastTime}  {breakfastName} </h2>
-        <h3>Prep Time: {breakfastPrepTime} minutes</h3>
-        <h3>Ingredients: {breakfastIngredients}</h3>
-        <h3>Recipe: {breakfastRecipe}</h3>
-        <h3>Nutrition Info: {breakfastNutrition}</h3>
+      {showBreakfast && <div style={{fontFamily: "Yellowtail"}}>
+        <h1>Breakfast: {breakfastTime}  {breakfastName} </h1>
+        <h2>Prep Time: {breakfastPrepTime} minutes</h2>
+        <h2>Ingredients: {breakfastIngredients}</h2>
+        <h2>Recipe: {breakfastRecipe}</h2>
+        <h2>Nutrition Info: {breakfastNutrition}</h2>
       </div>}
       <br/>
       <label for="lunch">Lunch </label>
       <button name="lunch" onClick={e => setShowLunch(!showLunch)}>show/hide</button>
-      {showLunch && <div>
-        <h2>Lunch: {lunchtime}  {lunchName} </h2>
-        <h3>Prep Time: {lunchPrepTime} minutes</h3>
-        <h3>Ingredients: {lunchIngredients}</h3>
-        <h3>Recipe: {lunchRecipe}</h3>
-        <h3>Nutrition Info: {lunchNutrition}</h3>
+      {showLunch && <div style={{fontFamily: "Yellowtail"}}>
+        <h1>Lunch: {lunchtime}  {lunchName} </h1>
+        <h2>Prep Time: {lunchPrepTime} minutes</h2>
+        <h2>Ingredients: {lunchIngredients}</h2>
+        <h2>Recipe: {lunchRecipe}</h2>
+        <h2>Nutrition Info: {lunchNutrition}</h2>
       </div>}
       <br/>
       <label for="dinner">Dinner </label>
       <button name="dinner" onClick={e => setShowDinner(!showDinner)}>show/hide</button>
-      {showDinner && <div>
-        <h2>Dinner: {dinnertime}  {dinnerName} </h2>
-        <h3>Prep Time: {dinnerPrepTime} minutes</h3>
-        <h3>Ingredients: {dinnerIngredients}</h3>
-        <h3>Recipe: {dinnerRecipe}</h3>
-        <h3>Nutrition Info: {dinnerNutrition}</h3>
+      {showDinner && <div style={{fontFamily: "Yellowtail"}}>
+        <h1>Dinner: {dinnertime}  {dinnerName} </h1>
+        <h2>Prep Time: {dinnerPrepTime} minutes</h2>
+        <h2>Ingredients: {dinnerIngredients}</h2>
+        <h2>Recipe: {dinnerRecipe}</h2>
+        <h2>Nutrition Info: {dinnerNutrition}</h2>
       </div>}
     </div>
   );

@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NumericInput from 'react-numeric-input';
 import moment from 'moment'
+import PulseLoader from 'react-spinners';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -102,6 +103,7 @@ export default function Setup() {
   const [dinnertime, setDinnertime] = useState(dinner)
   const [calorieLimit, setCalorieLimit] = useState(2000)
 
+  const [loading, setLoading] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(true)
 
   //Override to return local time instead of UTC
@@ -130,6 +132,7 @@ export default function Setup() {
       body: JSON.stringify(data),
       headers: {"Content-Type": "application/json"}
     }
+    setLoading(true);
     const response_package = await fetch("http://localhost:5000/create_plan", configs)
     const response = await response_package.json()
     console.log(response)
@@ -206,6 +209,7 @@ export default function Setup() {
               Continue
             </Button>
           </form>
+          {/* {loading && <PulseLoader />} */}
         </div>
       </Container>
     </MuiPickersUtilsProvider>
