@@ -91,7 +91,7 @@ export default function Setup() {
     }
   }
   redirect()
-})
+}, [])
 
   const [breakfast, lunch, dinner] = setTimes();
 
@@ -104,7 +104,7 @@ export default function Setup() {
   const [calorieLimit, setCalorieLimit] = useState(2000)
 
   const [loading, setLoading] = useState(false);
-  const [requestSuccess, setRequestSuccess] = useState(true)
+  const [requestSuccess, setRequestSuccess] = useState(false)
 
   //Override to return local time instead of UTC
   Date.prototype.toJSON = function(){ return moment(this).format(); }
@@ -133,11 +133,11 @@ export default function Setup() {
       headers: {"Content-Type": "application/json"}
     }
     setLoading(true);
-    const response_package = await fetch("http://localhost:5000/create_plan", configs)
-    const response = await response_package.json()
-    console.log(response)
-    setRequestSuccess(response.success)
-    if (requestSuccess) {
+    const response_package2 = await fetch("http://localhost:5000/create_plan", configs)
+    const response2 = await response_package2.json()
+    console.log(response2)
+    console.log(response2.success)
+    if (response2.success) {
       history.push("/calendar")
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useStateWithSessionStorage = (key) => {
+  const [data, setData] = useState(sessionStorage.getItem(key) || "");
+  return [data, setData]
+}
 
 export default function Login() {
 
@@ -53,7 +57,31 @@ export default function Login() {
   const [requestSuccess, setRequestSuccess] = useState(true);
   const [loginError, setLoginError] = useState(false);
 
+  const [token, setToken] = useStateWithSessionStorage("token"); 
   const history = useHistory();
+
+  useEffect(() => {
+    async function redirect() {
+    if (token !== "") {
+      const data2 = {token: token};
+      const configs2 = {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(data2),
+        headers: {"Content-Type": "application/json"}
+      }
+      const response_package2 = await fetch("http://localhost:5000/has_plan", configs2)
+      const response2 = await response_package2.json()
+      console.log(response2)
+      if (response2.success && response2.hasPlan) {
+        history.push("/calendar")
+      } else if (response2.success) {
+        history.push("/setup")
+      }
+    }
+  }
+  redirect()
+}, [])
 
   const loginUser = async () => {
     const data = {

@@ -28,6 +28,7 @@ def generate_initial_meals(pk):
         'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
         'x-rapidapi-key': "118c271f30mshaf7c7070fb3c9fdp1f7800jsn1dc535915371"
         }
+        print(gen_url)
         gen_response = requests.request("GET", gen_url, headers=headers, 
                                         params=gen_querystring)
         gen_data = gen_response.json()
@@ -55,19 +56,20 @@ def generate_initial_meals(pk):
                 recipe_url = f"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{rid}/information"
                 recipe_querystring = {"includeNutrition":"true"}
                 #reusing headers from before
+                print(recipe_url)
                 recipe_response = requests.request("GET", recipe_url, headers=headers, 
                                                    params=recipe_querystring)
                 recipe_data = recipe_response.json()
                 ingredients = ""
                 for ingredient in recipe_data["extendedIngredients"]:
-                    print(recipe_url)
                     print(ingredient["original"])
                     ingredients += ingredient["original"] + ', '
                 recipe_recipe = recipe_data["instructions"]
                 nutrition_info = ""
-                nutrition_info += "Percent protein: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentProtein"]) + ', '
-                nutrition_info += "Percent fat: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentFat"]) + ', '
-                nutrition_info += "Percent carbs: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentCarbs"])
+                if recipe_data.get("nutrition"):
+                    nutrition_info += "Percent protein: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentProtein"]) + ', '
+                    nutrition_info += "Percent fat: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentFat"]) + ', '
+                    nutrition_info += "Percent carbs: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentCarbs"])
                 prep_time = recipe_data["readyInMinutes"]
                 values = {"rid": rid, "ingredients": ingredients, 
                           "recipe": recipe_recipe, "nutrition_info": nutrition_info,
