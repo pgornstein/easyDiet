@@ -110,30 +110,45 @@ export default function Calendar() {
       <button name="breakfast" onClick={e => setShowBreakfast(!showBreakfast)}>show/hide</button>
       {showBreakfast && <div style={{fontFamily: "Yellowtail"}}>
         <h1>Breakfast: {breakfastTime}  {breakfastName} </h1>
-        <h2>Prep Time: {breakfastPrepTime} minutes</h2>
-        <h2>Ingredients: {breakfastIngredients}</h2>
-        <h2>Recipe: {breakfastRecipe}</h2>
-        <h2>Nutrition Info: {breakfastNutrition}</h2>
+        <h1>Prep Time: {breakfastPrepTime} minutes</h1>
+        <h1>Nutrition Info: {breakfastNutrition}</h1>
+        {breakfastIngredients.map(ingredient => {
+          return (
+            <h2>{ingredient}</h2>
+          )
+        })}
+        <h1>Recipe: </h1>
+        <h2>{breakfastRecipe}</h2>
       </div>}
       <br/>
       <label for="lunch">Lunch </label>
       <button name="lunch" onClick={e => setShowLunch(!showLunch)}>show/hide</button>
       {showLunch && <div style={{fontFamily: "Yellowtail"}}>
         <h1>Lunch: {lunchtime}  {lunchName} </h1>
-        <h2>Prep Time: {lunchPrepTime} minutes</h2>
-        <h2>Ingredients: {lunchIngredients}</h2>
-        <h2>Recipe: {lunchRecipe}</h2>
-        <h2>Nutrition Info: {lunchNutrition}</h2>
+        <h1>Prep Time: {lunchPrepTime} minutes</h1>
+        <h1>Nutrition Info: {lunchNutrition}</h1>
+        {lunchIngredients.map(ingredient => {
+          return (
+            <h2>{ingredient}</h2>
+          )
+        })}
+        <h1>Recipe: </h1>
+        <h2>{lunchRecipe}</h2>
       </div>}
       <br/>
       <label for="dinner">Dinner </label>
       <button name="dinner" onClick={e => setShowDinner(!showDinner)}>show/hide</button>
       {showDinner && <div style={{fontFamily: "Yellowtail"}}>
         <h1>Dinner: {dinnertime}  {dinnerName} </h1>
-        <h2>Prep Time: {dinnerPrepTime} minutes</h2>
-        <h2>Ingredients: {dinnerIngredients}</h2>
-        <h2>Recipe: {dinnerRecipe}</h2>
-        <h2>Nutrition Info: {dinnerNutrition}</h2>
+        <h1>Prep Time: {dinnerPrepTime} minutes</h1>
+        <h1>Nutrition Info: {dinnerNutrition}</h1>
+        {dinnerIngredients.map(ingredient => {
+          return (
+            <h2>{ingredient}</h2>
+          )
+        })}
+        <h1>Recipe: </h1>
+        <h2>{dinnerRecipe}</h2>
       </div>}
     </div>
   );

@@ -63,7 +63,7 @@ def generate_initial_meals(pk):
                 ingredients = ""
                 for ingredient in recipe_data["extendedIngredients"]:
                     print(ingredient["original"])
-                    ingredients += ingredient["original"] + ', '
+                    ingredients += ingredient["original"] + '|'
                 recipe_recipe = recipe_data["instructions"]
                 nutrition_info = ""
                 if recipe_data.get("nutrition"):
