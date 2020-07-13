@@ -15,7 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NumericInput from 'react-numeric-input';
 import moment from 'moment'
-//import PulseLoader from 'react-spinners';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -103,12 +103,12 @@ export default function Setup() {
   const [calorieLimit, setCalorieLimit] = useState(2000)
 
   const [loading, setLoading] = useState(false);
-  const [requestSuccess, setRequestSuccess] = useState(false)
 
   //Override to return local time instead of UTC
   Date.prototype.toJSON = function(){ return moment(this).format(); }
 
   const createDiet = async () => {
+    setLoading(true);
     const formattedStartDate = startDate.toJSON().slice(0, 10);
     const formattedEndDate = endDate.toJSON().slice(0, 10);
     const formattedBreakfastTime = breakfastTime.toJSON().slice(11, 19);
@@ -131,7 +131,6 @@ export default function Setup() {
       body: JSON.stringify(data),
       headers: {"Content-Type": "application/json"}
     }
-    setLoading(true);
     const response_package2 = await fetch("http://localhost:5000/create_plan", configs)
     const response2 = await response_package2.json()
     console.log(response2)
@@ -191,7 +190,7 @@ export default function Setup() {
                               onChange={e => setCalorieLimit(e)} />
               </Grid>
             </Grid>
-            <Button
+            {!loading && <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -203,9 +202,9 @@ export default function Setup() {
               }}
             >
               Continue
-            </Button>
+            </Button>}
+            {loading && <CircularProgress />}
           </form>
-          {/* {loading && <PulseLoader />} */}
         </div>
       </Container>
     </MuiPickersUtilsProvider>
