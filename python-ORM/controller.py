@@ -72,9 +72,10 @@ def get_todays_meals():
     user_info = request.get_json()
     if user_info:
         user_pk = lookup_pk_by_session(user_info["token"])
-        plan = Plan.plan_for_user(user_pk)
+        user = User.user_for_pk(user_pk)
+        result["username"] = user.name
+        plan = user.get_plan()
         meals = plan.get_meals_for_day(user_info["today"])
-        result["success"] = success
         for i in range(3):
             meal_result = {}
             meal = meals[i]
@@ -87,6 +88,7 @@ def get_todays_meals():
             meal_result["recipe"] = recipe.recipe
             meal_result["nutritionInfo"] = recipe.nutrition_info
             result[meal.meal] = meal_result # i.e. result["breakfast"] = meal_result
+        result["success"] = success
     else:
         success = False
     result["success"] = success
