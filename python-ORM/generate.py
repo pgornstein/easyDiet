@@ -67,9 +67,9 @@ def generate_initial_meals(pk):
                 recipe_recipe = recipe_data["instructions"]
                 nutrition_info = ""
                 if recipe_data.get("nutrition"):
-                    nutrition_info += "Percent protein: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentProtein"]) + ', '
-                    nutrition_info += "Percent fat: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentFat"]) + ', '
-                    nutrition_info += "Percent carbs: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentCarbs"])
+                    nutrition_info += "Protein: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentProtein"]) + '%, '
+                    nutrition_info += "Fat: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentFat"]) + '%, '
+                    nutrition_info += "Carbs: " + str(recipe_data["nutrition"]["caloricBreakdown"]["percentCarbs"]) + '%'
                 prep_time = recipe_data["readyInMinutes"]
                 values = {"rid": rid, "ingredients": ingredients, 
                           "recipe": recipe_recipe, "nutrition_info": nutrition_info,

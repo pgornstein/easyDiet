@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment'
+import Button from '@material-ui/core/Button';
 
 const useStateWithSessionStorage = (key) => {
   const [data, setData] = useState(sessionStorage.getItem(key) || "");
@@ -108,52 +109,64 @@ export default function Calendar() {
 }, [])
 
   return(
-    <div style={{fontFamily: "Roboto"}}>
-      <h1>Hello {username}, here is the meal plan for today, {today.toDateString()}</h1>
-      <label for="breakfast">Breakfast </label>
-      <button name="breakfast" onClick={e => setShowBreakfast(!showBreakfast)}>show/hide</button>
+    <div style={{fontFamily: "Quicksand", margin: "15px"}}>
+      <div style={{textAlign: "center"}}>
+        <h1>Hello {username}, here is the meal plan for today, {today.toDateString()}</h1>
+        <Button variant="outlined" onClick={e => {
+          setShowBreakfast(true)
+          setShowLunch(false)
+          setShowDinner(false)}}>Breakfast</Button>
+        <Button variant="outlined" onClick={e => {
+          setShowBreakfast(false)
+          setShowLunch(true)
+          setShowDinner(false)}}>Lunch</Button>
+        <Button variant="outlined" onClick={e => {
+          setShowBreakfast(false)
+          setShowLunch(false)
+          setShowDinner(true)}}>Dinner</Button>
+      </div>
       {showBreakfast && <div>
         <h1>Breakfast: {breakfastTime}  {breakfastName} </h1>
         <h1>Prep Time: {breakfastPrepTime} minutes</h1>
         <h1>Nutrition Info: {breakfastNutrition}</h1>
+        <hr></hr>
         <h1>Ingredients: </h1>
         {breakfastIngredients.map(ingredient => {
           return (
             <h2>{ingredient}</h2>
           )
         })}
+        <hr></hr>
         <h1>Recipe: </h1>
         <h2>{breakfastRecipe}</h2>
       </div>}
-      <br/>
-      <label for="lunch">Lunch </label>
-      <button name="lunch" onClick={e => setShowLunch(!showLunch)}>show/hide</button>
       {showLunch && <div>
         <h1>Lunch: {lunchtime}  {lunchName} </h1>
         <h1>Prep Time: {lunchPrepTime} minutes</h1>
         <h1>Nutrition Info: {lunchNutrition}</h1>
+        <hr></hr>
         <h1>Ingredients: </h1>
         {lunchIngredients.map(ingredient => {
           return (
             <h2>{ingredient}</h2>
           )
         })}
+        <hr></hr>
         <h1>Recipe: </h1>
         <h2>{lunchRecipe}</h2>
       </div>}
-      <br/>
-      <label for="dinner">Dinner </label>
-      <button name="dinner" onClick={e => setShowDinner(!showDinner)}>show/hide</button>
       {showDinner && <div>
         <h1>Dinner: {dinnertime}  {dinnerName} </h1>
         <h1>Prep Time: {dinnerPrepTime} minutes</h1>
         <h1>Nutrition Info: {dinnerNutrition}</h1>
+        <hr></hr>
         <h1>Ingredients: </h1>
         {dinnerIngredients.map(ingredient => {
           return (
             <h2>{ingredient}</h2>
           )
         })}
+        <hr></hr>
         <h1>Recipe: </h1>
         <h2>{dinnerRecipe}</h2>
       </div>}
